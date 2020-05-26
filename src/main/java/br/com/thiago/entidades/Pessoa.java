@@ -26,7 +26,7 @@ public class Pessoa implements Serializable{
 	private Integer idade;
 	
 	@Temporal(TemporalType.DATE)
-	private Date dataNascimento;
+	private Date dataNascimento = new Date();
 	
 	private String sexo;
 	
@@ -42,6 +42,8 @@ public class Pessoa implements Serializable{
 	private String nivel;
 	
 	private Integer[] linguagens;
+	
+	private String cep;
 	
 	public Pessoa() {
 		
@@ -121,6 +123,12 @@ public class Pessoa implements Serializable{
 	}
 	public void setLinguagens(Integer[] linguagens) {
 		this.linguagens = linguagens;
+	}
+	public String getCep() {
+		return cep;
+	}
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 	@Override
 	public int hashCode() {

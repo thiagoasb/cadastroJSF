@@ -29,7 +29,11 @@
 			<h:inputText  value="#{pessoaBean.pessoa.id}" readonly="true"></h:inputText>
 			
 			<h:outputLabel  value="Nome:" for="nome"/>
-			<h:inputText id="nome" value="#{pessoaBean.pessoa.nome}" />
+			<h:inputText id="nome" value="#{pessoaBean.pessoa.nome}" required="true"
+				requiredMessage="Informe nome do usuário." 
+				validatorMessage="Nome precisa ter no mínimo 3 caracteres.">
+				<f:validateLength minimum="3" maximum="50" />
+			</h:inputText>
 			
 			<h:outputLabel  value="Sobrenome:"/>
 			<h:inputText id="sobrenome" value="#{pessoaBean.pessoa.sobrenome}" />
@@ -44,6 +48,11 @@
 				<f:selectItem itemLabel="Feminino" itemValue="FEMININO" />
 			</h:selectOneMenu>
 			
+			<h:outputLabel value="DataNascimento:" />
+			<h:inputText value="#{pessoaBean.pessoa.dataNascimento}" converterMessage="Data em formato incorreto!">
+				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00"/>
+			</h:inputText>
+			
 			<h:outputLabel value="Frameworks:" />
 			<h:selectManyMenu id="campoframeworks" style="height:150px;"
 				value="#{pessoaBean.pessoa.frameworks}">
@@ -53,6 +62,11 @@
 				<f:selectItem itemValue="JSF"  />
 				<f:selectItem itemValue="PrimerFaces"  />
 			</h:selectManyMenu>
+			
+			<h:outputLabel value="CEP:" />
+			<h:inputText value="#{pessoaBean.pessoa.cep}">
+				<f:ajax event="blur" execute="@this" listener="#{pessoaBean.pesquisaCep}"/>
+			</h:inputText>
 			
 			<h:outputLabel value="Ativo"/>
 			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}"/>
@@ -90,21 +104,23 @@
 			
 			<h:outputLabel/>
 			<h:panelGroup>
-				<h:commandButton value="Novo" action="#{pessoaBean.novoBotao}" 
-					image="/resources/img/novo.png" title="Novo" style="margin-left:1cm;" />
+				<h:commandButton id="botaoNovo" value="Novo" action="#{pessoaBean.novoBotao}" 
+					image="/resources/img/novo.png" title="Novo" style="margin-left:1cm;">
+					<f:ajax execute="botaoNovo" render="@form"/>
+				</h:commandButton>
 				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" 
 					image="/resources/img/salvar.png" title="Salvar" style="margin-left:1cm;" />
 				<h:commandButton value="Remover" action="#{pessoaBean.remover}" 
 					image="/resources/img/lixo.png" title="Remover" style="margin-left:1cm;"
 					rendered="#{pessoaBean.liberarAcesso('ADMINISTRADOR')}"/>
-				<h:commandButton value="Limpar" type="reset" 
-					image="/resources/img/broom.png" title="Limpar" style="margin-left:1cm;" />
 			</h:panelGroup>
 			
 			
 		</h:panelGrid>
 		
-		
+	</h:form>
+	
+	<h:form id="formTable">
 		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa" border="3" cellpadding="6">
 			<f:facet name="header">
 				Lista de Usuários Cadastrados
@@ -141,7 +157,6 @@
 				</h:commandLink>
 			</h:column>
 		</h:dataTable>
-		
 	</h:form>
 
 </h:body>
