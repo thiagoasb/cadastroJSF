@@ -8,6 +8,7 @@
 	
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>br.com.thiago.entidades.Pessoa</class>
+		<class>br.com.thiago.entidades.Lancamento</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/cadastrojsf"/>

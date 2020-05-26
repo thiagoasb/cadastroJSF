@@ -39,6 +39,10 @@ public class Pessoa implements Serializable{
 	
 	private String perfilUser;
 	
+	private String nivel;
+	
+	private Integer[] linguagens;
+	
 	public Pessoa() {
 		
 	}
@@ -105,6 +109,18 @@ public class Pessoa implements Serializable{
 	}
 	public void setPerfilUser(String perfilUser) {
 		this.perfilUser = perfilUser;
+	}
+	public String getNivel() {
+		return nivel;
+	}
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
+	}
+	public Integer[] getLinguagens() {
+		return linguagens;
+	}
+	public void setLinguagens(Integer[] linguagens) {
+		this.linguagens = linguagens;
 	}
 	@Override
 	public int hashCode() {
