@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui = "http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
 	<title>Cadastro de usuário</title>
@@ -13,7 +14,7 @@
 	
 	<ui:include src="/menu.xhtml" />
 
-	<h:form id="formPessoa" rendered="#{pessoaBean.liberarAcesso('ADMINISTRADOR')}">
+	<h:form id="formPessoa" enctype="multipart/form-data" rendered="#{pessoaBean.liberarAcesso('ADMINISTRADOR')}">
 		
 		<h:graphicImage heigth="150" width="150" library="img" name="usuarios.png" />
 		
@@ -28,10 +29,14 @@
 			<h:outputLabel value="Id:"></h:outputLabel>
 			<h:inputText  value="#{pessoaBean.pessoa.id}" readonly="true"></h:inputText>
 			
+			<h:outputLabel value="Foto:" />
+			<h:inputFile id="foto" value="#{pessoaBean.arquivofoto}"></h:inputFile>
+			
 			<h:outputLabel  value="Nome:" for="nome"/>
 			<h:inputText id="nome" value="#{pessoaBean.pessoa.nome}" required="true"
 				requiredMessage="Informe nome do usuário." 
-				validatorMessage="Nome precisa ter no mínimo 3 caracteres.">
+				validatorMessage="Nome precisa ter no mínimo 3 caracteres."
+				pt:placeholder="Informe o nome do usuário">
 				<f:validateLength minimum="3" maximum="50" />
 			</h:inputText>
 			
@@ -65,8 +70,27 @@
 			
 			<h:outputLabel value="CEP:" />
 			<h:inputText value="#{pessoaBean.pessoa.cep}">
-				<f:ajax event="blur" execute="@this" listener="#{pessoaBean.pesquisaCep}"/>
+				<f:ajax event="blur" execute="@this" listener="#{pessoaBean.pesquisaCep}"
+						render="logradouro complemento bairro localidade uf unidade"/>
 			</h:inputText>
+			
+			<h:outputLabel value="Complemento:" />
+			<h:inputText value="#{pessoaBean.pessoa.complemento}" id="complemento" />
+			
+			<h:outputLabel value="Logradouro:" />
+			<h:inputText value="#{pessoaBean.pessoa.logradouro}" id="logradouro" />
+			
+			<h:outputLabel value="Bairro" />
+			<h:inputText value="#{pessoaBean.pessoa.bairro}" id="bairro" />
+			
+			<h:outputLabel value="Localidade:" />
+			<h:inputText value="#{pessoaBean.pessoa.localidade}" id="localidade" />
+			
+			<h:outputLabel value="UF:" />
+			<h:inputText value="#{pessoaBean.pessoa.uf}" id="uf" />
+			
+			<h:outputLabel value="Unidade:" />
+			<h:inputText value="#{pessoaBean.pessoa.unidade}" id="unidade" />
 			
 			<h:outputLabel value="Ativo"/>
 			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}"/>
@@ -133,6 +157,13 @@
 			<h:column>
 				<f:facet name="header">Nome</f:facet>
 				<h:outputText value="#{pessoa.nome}"></h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Foto</f:facet>
+				<h:commandLink actionListener="#{pessoaBean.download}">
+					<h:graphicImage width="60" height="60" value="#{pessoa.fotoIconBase64}"></h:graphicImage>
+					<f:param name="fileDownloadId" value="#{pessoa.id}" />
+				</h:commandLink>
 			</h:column>
 			<h:column>
 				<f:facet name="header">Sobrenome</f:facet>

@@ -8,7 +8,7 @@
 	<h:form>
 		<h:commandLink value="Administração" action="cadastrousuario" style="margin-left:1cm;" rendered="#{pessoaBean.liberarAcesso('ADMINISTRADOR')}" />
 		<h:commandLink value="Lançamentos" action="lancamento" style="margin-left:1cm;" />
-		<h:commandLink value="Sair" action="index" style="margin-left:1cm;" />
+		<h:commandLink value="Sair" action="#{pessoaBean.deslogar}" style="margin-left:1cm;" />
 	</h:form>
 
 
