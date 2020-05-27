@@ -21,6 +21,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -255,5 +256,10 @@ public class PessoaBean {
 		
 		FacesContext.getCurrentInstance().responseComplete();
 		
+	}
+	
+	public void mudancaoDeValor(ValueChangeEvent evento) {
+		System.out.println("Valor antigo: " + evento.getOldValue());
+		System.out.println("Valor novo: " + evento.getNewValue());
 	}
 }

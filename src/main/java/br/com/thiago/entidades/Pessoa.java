@@ -13,6 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Pessoa implements Serializable{
@@ -23,10 +29,16 @@ public class Pessoa implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@NotEmpty(message = "Digite seu nome")
+	@Size(min = 3, max = 50, message="Nome deve possuir entre 3 e 50 caracteres")
 	private String nome;
 	
+	@NotEmpty(message = "Sobrenome deve ser informado")
+	@NotNull(message = "Sobrenome deve ser informado")
 	private String sobrenome;
 	
+	@DecimalMax(value = "70", message = "Idade deve ser menor que 70")
+	@DecimalMin(value = "10", message = "Idade deve ser maior que 10")
 	private Integer idade;
 	
 	@Temporal(TemporalType.DATE)
